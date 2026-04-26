@@ -1,0 +1,248 @@
+:root {
+    --bg-color: #02030a;
+    --sidebar-bg: #040510;
+    --dot-color: #ffffff;
+    --active-color: #001a33;
+    --neon-blue: #00d9ff;
+    --grid-size: 32;
+    --active-text: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: #ffffff;
+    font-family: 'Fira Code', monospace;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+.app-container {
+    display: grid;
+    grid-template-columns: 15% 85%;
+    width: 100%;
+    height: 100%;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    background-color: var(--sidebar-bg);
+    border-right: 1px solid rgba(0, 217, 255, 0.1);
+    padding: 40px 25px;
+    z-index: 20;
+}
+
+.command-block {
+    font-size: 15px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.command-header {
+    color: #ffffff;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.command-body {
+    padding-left: 10px;
+}
+
+.target-coord {
+    color: var(--neon-blue);
+    font-weight: 600;
+    text-shadow: 0 0 5px rgba(0, 217, 255, 0.5);
+}
+
+/* Viewport & Grid Styling */
+.viewport {
+    display: flex;
+    padding: 60px 80px 80px 40px;
+    /* Space for axes */
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.grid-layout {
+    display: grid;
+    grid-template-areas:
+        "ylabels grid"
+        ".       xlabels";
+    grid-template-columns: 60px 1fr;
+    grid-template-rows: 1fr 60px;
+    width: 100%;
+    height: 100%;
+    gap: 0;
+    /* Align axes directly to grid edges */
+}
+
+#y-labels {
+    grid-area: ylabels;
+    display: flex;
+    flex-direction: column-reverse;
+    /* Bottom to Top */
+    justify-content: space-between;
+    height: 100%;
+    padding-right: 15px;
+}
+
+.y-label {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 9px;
+    color: rgba(255, 255, 255, 0.3);
+    user-select: none;
+    height: 0;
+    /* Let flex handle spacing */
+}
+
+.grid-container {
+    grid-area: grid;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: radial-gradient(circle at center, rgba(0, 217, 255, 0.02) 0%, transparent 70%);
+}
+
+.dots-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-size), 1fr);
+    grid-template-rows: repeat(var(--grid-size), 1fr);
+    width: 100%;
+    height: 100%;
+}
+
+#x-labels {
+    grid-area: xlabels;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding-top: 15px;
+}
+
+.x-label {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 9px;
+    color: rgba(255, 255, 255, 0.3);
+    user-select: none;
+    width: 0;
+}
+
+/* Grid Cells */
+.cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: crosshair;
+    font-size: 8px;
+    color: rgba(255, 255, 255, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+    border: 0.5px solid rgba(255, 255, 255, 0.02);
+}
+
+.cell:hover {
+    background-color: rgba(0, 217, 255, 0.05);
+    color: #ffffff;
+}
+
+.cell.active {
+    color: #ffffff;
+    background-color: var(--active-color);
+    box-shadow: inset 0 0 10px rgba(0, 217, 255, 0.2);
+    font-weight: bold;
+    z-index: 5;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cell.charging {
+    transform: scale(1.15);
+    color: var(--neon-blue) !important;
+    background-color: var(--active-color);
+    box-shadow: 0 0 25px var(--neon-blue), inset 0 0 15px var(--neon-blue);
+    text-shadow: 0 0 10px var(--neon-blue);
+    z-index: 10;
+    font-weight: bold;
+}
+
+.cell.target {
+    color: var(--neon-blue);
+    animation: pulse-target 2s ease-in-out infinite;
+    z-index: 6;
+    text-shadow: 0 0 10px var(--neon-blue);
+    background-color: rgba(0, 217, 255, 0.1);
+}
+
+@keyframes pulse-target {
+    0% {
+        opacity: 0.4;
+        background-color: rgba(0, 217, 255, 0.05);
+    }
+
+    50% {
+        opacity: 1;
+        background-color: rgba(0, 217, 255, 0.2);
+        transform: scale(1.1);
+    }
+
+    100% {
+        opacity: 0.4;
+        background-color: rgba(0, 217, 255, 0.05);
+    }
+}
+
+/* Connections Overlay */
+.connections-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.connection-path.base {
+    fill: none;
+    stroke: var(--neon-blue);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.3;
+}
+
+.connection-path.energy {
+    fill: none;
+    stroke: var(--neon-blue);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.8;
+    filter: drop-shadow(0 0 5px var(--neon-blue));
+}
+
+.mask-pulse {
+    fill: white;
+    filter: blur(4px);
+}
+
+@keyframes pulse-flow {
+    from {
+        stroke-dashoffset: 110;
+    }
+
+    to {
+        stroke-dashoffset: 0;
+    }
+}
