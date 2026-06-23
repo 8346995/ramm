@@ -1,3 +1,6 @@
+body{
+    background:red !important;
+}
 :root {
     --bg-color: #000000;
     --sidebar-bg: #000000;
