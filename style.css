@@ -33,7 +33,7 @@ body {
 /* Sidebar Styling */
 .sidebar {
     background-color: var(--sidebar-bg);
-    border-right: 1px solid rgba(0, 217, 255, 0.1);
+    border-right: 1px solid rgba(255,255,255,0.08);
     padding: 40px 25px;
     z-index: 20;
 }
@@ -107,8 +107,12 @@ body {
 .grid-container {
     grid-area: grid;
     position: relative;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: radial-gradient(circle at center, rgba(0, 217, 255, 0.02) 0%, transparent 70%);
+    border: 1px solid rgba(255,255,255,0.08);
+    background: radial-gradient(
+        circle at center,
+        rgba(255,255,255,0.02) 0%,
+        transparent 70%
+    );
 }
 
 .dots-grid {
@@ -153,7 +157,7 @@ body {
 }
 
 .cell:hover {
-    background-color: rgba(0, 217, 255, 0.05);
+    background-color: rgba(255,255,255,0.04);
     color: #ffffff;
 }
 
@@ -177,29 +181,30 @@ body {
 }
 
 .cell.target {
-    color: var(--neon-blue);
+    color: #ffffff;
     animation: pulse-target 2s ease-in-out infinite;
     z-index: 6;
-    text-shadow: 0 0 10px var(--neon-blue);
-    background-color: rgba(0, 217, 255, 0.1);
+    text-shadow: 0 0 10px rgba(255,255,255,0.7);
+    background-color: rgba(255,255,255,0.08);
 }
 
 @keyframes pulse-target {
     0% {
         opacity: 0.4;
-        background-color: rgba(0, 217, 255, 0.05);
+        background-color: rgba(255,255,255,0.03);
     }
 
     50% {
         opacity: 1;
-        background-color: rgba(0, 217, 255, 0.2);
+        background-color: rgba(255,255,255,0.12);
         transform: scale(1.1);
     }
 
     100% {
         opacity: 0.4;
-        background-color: rgba(0, 217, 255, 0.05);
+        background-color: rgba(255,255,255,0.03);
     }
+}
 }
 
 /* Connections Overlay */
