@@ -1,9 +1,9 @@
 :root {
-    --bg-color: #02030a;
-    --sidebar-bg: #040510;
+    --bg-color: #000000;
+    --sidebar-bg: #000000;
     --dot-color: #ffffff;
-    --active-color: #001a33;
-    --neon-blue: #00d9ff;
+    --active-color: #111111;
+    --neon-blue: #ffffff;
     --grid-size: 32;
     --active-text: #ffffff;
 }
