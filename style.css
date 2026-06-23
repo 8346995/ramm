@@ -60,7 +60,7 @@ body {
 .target-coord {
     color: var(--neon-blue);
     font-weight: 600;
-    text-shadow: 0 0 5px rgba(0, 217, 255, 0.5);
+    text-shadow: 0 0 5px rgbargba(255, 255, 255);
 }
 
 /* Viewport & Grid Styling */
